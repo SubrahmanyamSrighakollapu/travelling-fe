@@ -101,20 +101,15 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled ? "shadow-lg border-b border-white/10" : "border-b border-white/5"
+        "fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-xl transition-all duration-300",
+        scrolled ? "bg-slate-950/95 shadow-lg border-white/10" : "bg-slate-950/75 border-white/5"
       )}
-      style={{
-        background: scrolled ? "rgba(2,8,23,0.95)" : "rgba(2,8,23,0.75)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
-      }}
     >
       <nav className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8" ref={menuRef}>
         <div className="flex items-center justify-between h-16 lg:h-[4.5rem]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-emerald-400/40 transition-shadow" style={{ background: "linear-gradient(135deg, #059669, #0d9488)" }}>
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 shadow-md transition-shadow group-hover:shadow-lg">
               <Globe className="h-5 w-5 text-white" />
             </div>
             <span className="text-xl font-bold tracking-tight">
@@ -148,8 +143,7 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.97 }}
                       transition={{ duration: 0.15, ease: "easeOut" }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-2xl shadow-2xl border border-white/10 p-2 z-50"
-                      style={{ background: "rgba(2,8,23,0.95)", backdropFilter: "blur(20px)" }}
+                      className="absolute top-full left-1/2 z-50 mt-2 w-72 -translate-x-1/2 rounded-2xl border border-white/10 bg-slate-950/95 p-2 shadow-2xl backdrop-blur-xl"
                       onMouseEnter={() => handleMouseEnter(item.label)}
                       onMouseLeave={handleMouseLeave}
                     >
@@ -157,11 +151,10 @@ export function Navbar() {
                         <Link
                           key={sub.label}
                           href={sub.href}
-                          className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/8 group transition-colors"
-                          style={{ "--hover-bg": "rgba(255,255,255,0.08)" } as React.CSSProperties}
+                          className="group flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-white/10"
                           onClick={() => setActiveMenu(null)}
                         >
-                          <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors" style={{ background: "rgba(5,150,105,0.15)" }}>
+                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 transition-colors">
                             <sub.icon className="h-4 w-4 text-emerald-400" />
                           </div>
                           <div>
@@ -214,7 +207,7 @@ export function Navbar() {
                 <Button variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10">Sign In</Button>
               </Link>
               <Link href="/auth?tab=register">
-                <Button variant="gradient" size="sm" className="shadow-lg" style={{ background: "linear-gradient(135deg, #059669, #0d9488)", boxShadow: "0 4px 16px rgba(5,150,105,0.35)" }}>
+                <Button variant="gradient" size="sm" className="shadow-lg">
                   Get Started
                 </Button>
               </Link>
@@ -237,8 +230,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t border-white/10 overflow-hidden"
-            style={{ background: "rgba(2,8,23,0.95)", backdropFilter: "blur(20px)" }}
+            className="overflow-hidden border-t border-white/10 bg-slate-950/95 backdrop-blur-xl lg:hidden"
           >
             <div className="max-w-[1400px] mx-auto px-4 py-4 space-y-1">
               {NAV_ITEMS.map((item) => (

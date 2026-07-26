@@ -46,7 +46,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <AnimatePresence mode="sync">
@@ -80,9 +80,9 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-1 items-center px-4 pb-16 pt-32 sm:px-6 sm:pt-36 lg:px-8 lg:pt-40">
         {/* Hero Text */}
-        <div className="text-center mb-10">
+        <div className="w-full text-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -97,10 +97,10 @@ export function HeroSection() {
               >
                 <span>{HERO_TEXTS[currentSlide].tag}</span>
               </div>
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-4 leading-[1.0] tracking-tight drop-shadow-2xl">
+              <h1 className="mx-auto max-w-5xl text-5xl font-bold tracking-tight text-white drop-shadow-2xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl">
                 {HERO_TEXTS[currentSlide].title}
               </h1>
-              <p className="text-2xl sm:text-3xl text-white/85 font-light drop-shadow-lg">
+              <p className="mt-4 text-xl font-light text-white/85 drop-shadow-lg sm:text-2xl lg:text-3xl">
                 {HERO_TEXTS[currentSlide].subtitle}
               </p>
             </motion.div>
@@ -111,18 +111,18 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="flex items-center justify-center flex-wrap gap-6 mt-6 text-white/80 text-sm"
+            className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-white/80 sm:gap-6"
           >
             <div className="flex items-center gap-1.5">
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
               <span className="font-medium">4.9/5 Rating</span>
             </div>
-            <div className="w-px h-4 bg-white/30" />
+            <div className="hidden h-4 w-px bg-white/30 sm:block" />
             <div className="flex items-center gap-1.5">
               <TrendingUp className="h-4 w-4 text-emerald-400" />
               <span className="font-medium">2.4M+ Travelers</span>
             </div>
-            <div className="w-px h-4 bg-white/30" />
+            <div className="hidden h-4 w-px bg-white/30 sm:block" />
             <div className="flex items-center gap-1.5">
               <Shield className="h-4 w-4 text-blue-400" />
               <span className="font-medium">Best Price Guarantee</span>
@@ -135,20 +135,20 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="max-w-5xl mx-auto"
+          className="mx-auto mt-10 max-w-5xl"
         >
           <div
             className="rounded-3xl shadow-2xl overflow-hidden border border-white/25"
             style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(24px) saturate(180%)", WebkitBackdropFilter: "blur(24px) saturate(180%)" }}
           >
             {/* Tabs */}
-            <div className="flex items-center gap-1 p-3 border-b border-white/15">
+            <div className="flex flex-wrap items-center gap-2 border-b border-white/15 p-3">
               {SEARCH_TABS.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all",
+                    "flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all sm:px-4",
                     activeTab === tab.id
                       ? "text-white shadow-md"
                       : "text-white/75 hover:text-white hover:bg-white/10"
@@ -156,11 +156,11 @@ export function HeroSection() {
                   style={activeTab === tab.id ? { background: "rgba(5,150,105,0.9)" } : {}}
                 >
                   <tab.icon className="h-4 w-4" />
-                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="hidden md:inline">{tab.label}</span>
                 </button>
               ))}
               {activeTab === "flights" && (
-                <div className="ml-auto flex items-center gap-1">
+                <div className="flex basis-full items-center justify-start gap-1 pt-1 sm:ml-auto sm:basis-auto sm:justify-end sm:pt-0">
                   {(["one-way", "round-trip", "multi-city"] as const).map((type) => (
                     <button
                       key={type}
@@ -224,7 +224,6 @@ export function HeroSection() {
                   variant="gradient"
                   size="lg"
                   className="flex-shrink-0 shadow-xl"
-                  style={{ background: "linear-gradient(135deg, #059669, #0d9488)", boxShadow: "0 8px 32px rgba(5,150,105,0.4)" }}
                 >
                   <Search className="h-5 w-5" />
                   <span>Search</span>
