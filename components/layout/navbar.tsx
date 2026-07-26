@@ -68,7 +68,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const { items: wishlistItems } = useWishlist();
-  const { items: cartItems, setOpen: setCartOpen } = useCart();
+  const { items: cartItems } = useCart();
   const { theme, toggleTheme } = useUI();
   const menuRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -181,7 +181,11 @@ export function Navbar() {
               {theme === "dark" ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
             </button>
 
-            <Link href="/wishlist" className="relative hidden sm:flex h-9 w-9 items-center justify-center rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all">
+            <Link
+              href="/wishlist"
+              aria-label="View wishlist"
+              className="relative hidden sm:flex h-9 w-9 items-center justify-center rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all"
+            >
               <Heart className="h-4.5 w-4.5" />
               {wishlistItems.length > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
@@ -190,8 +194,9 @@ export function Navbar() {
               )}
             </Link>
 
-            <button
-              onClick={() => setCartOpen(true)}
+            <Link
+              href="/cart"
+              aria-label="View cart"
               className="relative hidden sm:flex h-9 w-9 items-center justify-center rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all"
             >
               <ShoppingCart className="h-4.5 w-4.5" />
@@ -200,7 +205,7 @@ export function Navbar() {
                   {cartItems.length}
                 </span>
               )}
-            </button>
+            </Link>
 
             <div className="hidden sm:flex items-center gap-2 ml-1">
               <Link href="/auth">
@@ -244,6 +249,24 @@ export function Navbar() {
                   <span className="font-medium">{item.label}</span>
                 </Link>
               ))}
+              <div className="grid grid-cols-2 gap-2 pt-3">
+                <Link
+                  href="/wishlist"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-white/80 transition-all hover:bg-white/10 hover:text-white"
+                >
+                  <Heart className="h-4 w-4" />
+                  Wishlist
+                </Link>
+                <Link
+                  href="/cart"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-3 text-white/80 transition-all hover:bg-white/10 hover:text-white"
+                >
+                  <ShoppingCart className="h-4 w-4" />
+                  Cart
+                </Link>
+              </div>
               <div className="pt-3 border-t border-white/10 flex gap-2">
                 <Link href="/auth" className="flex-1">
                   <Button variant="secondary" size="md" className="w-full">Sign In</Button>
