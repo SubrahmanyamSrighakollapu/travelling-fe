@@ -27,19 +27,7 @@ function ComplaintStatusContent() {
   return (
     <BBPSLayout pageTitle="Complaint Tracking">
       <div className="space-y-6">
-        <div className="bg-sky-300/80 rounded-2xl p-6 shadow-sm relative min-h-[460px]">
-          {/* Fixed 35px Bharat Connect Horizontal Logo Top-Right */}
-          <div className="absolute top-4 right-4 bg-white px-2 py-1 rounded shadow-2xs">
-            <Image
-              src="/assets/Bharat Connect Primary Logo_PNG.png"
-              alt="Bharat Connect"
-              width={140}
-              height={35}
-              className="h-[35px] w-auto object-contain"
-              priority
-            />
-          </div>
-
+        <div className="bg-sky-300/80 rounded-2xl p-6 shadow-sm min-h-[460px]">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
             {/* Left Sidebar Menu */}
             <div className="md:col-span-1 bg-sky-200/60 rounded-xl p-3 space-y-2 text-xs font-semibold text-slate-800">
@@ -69,9 +57,21 @@ function ComplaintStatusContent() {
             <div className="md:col-span-3 space-y-6">
               {/* Form Box: Check Complaint Status (Screenshot 3) */}
               <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm max-w-xl space-y-4">
-                <h2 className="text-sm font-bold text-red-500">
-                  Check Complaint Status
-                </h2>
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <h2 className="text-sm font-bold text-red-500">
+                    Check Complaint Status
+                  </h2>
+                  <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+                    <Image
+                      src="/assets/Bharat Connect Primary Logo_PNG.png"
+                      alt="Bharat Connect"
+                      width={140}
+                      height={35}
+                      className="h-[32px] w-auto object-contain"
+                      priority
+                    />
+                  </div>
+                </div>
 
                 <form onSubmit={handleQueryStatus} className="space-y-4 text-xs">
                   <div className="space-y-1">

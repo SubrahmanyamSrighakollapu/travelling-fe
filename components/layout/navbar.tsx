@@ -7,6 +7,7 @@ import {
   Search, Heart, ShoppingCart, Bell, User, Menu, X, Sun, Moon,
   ChevronDown, Sparkles, Globe, TrendingUp, Zap, ArrowRight
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useWishlist, useCart, useUI } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -109,13 +110,14 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-[4.5rem]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 shadow-md transition-shadow group-hover:shadow-lg">
-              <Globe className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold tracking-tight">
-              <span className="gradient-text">Wander</span>
-              <span className="text-white">lust</span>
-            </span>
+            <Image
+              src="/assets/web-logo.jpg"
+              alt="Logo"
+              width={160}
+              height={40}
+              className="h-10 w-auto object-contain rounded-lg"
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Globe, Mail, Phone, MapPin, ArrowRight, Sparkles, Share2, Rss, X, MessageCircle, Link2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -91,26 +92,29 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                <Globe className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-white">Wanderlust</span>
+              <Image
+                src="/assets/web-logo.jpg"
+                alt="Logo"
+                width={160}
+                height={40}
+                className="h-10 w-auto object-contain rounded-lg"
+              />
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-xs">
-              Your premium travel companion. Discover, plan, and book extraordinary journeys with confidence.
+              Your premium travel & bill payment companion. Discover, plan, and execute operations with confidence.
             </p>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2 text-slate-400">
                 <Mail className="h-4 w-4 text-emerald-500" />
-                <span>hello@wanderlust.travel</span>
+                <span>support@bharatconnect.in</span>
               </div>
               <div className="flex items-center gap-2 text-slate-400">
                 <Phone className="h-4 w-4 text-emerald-500" />
-                <span>+1 (800) WANDER-1</span>
+                <span>1800-11-2233</span>
               </div>
               <div className="flex items-center gap-2 text-slate-400">
                 <MapPin className="h-4 w-4 text-emerald-500" />
-                <span>San Francisco, CA 94105</span>
+                <span>Operations Network Node</span>
               </div>
             </div>
           </div>
@@ -134,7 +138,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-slate-500 text-sm">© 2025 Wanderlust Travel. All rights reserved.</p>
+          <p className="text-slate-500 text-sm">© 2026 Retailer Operations Portal. All rights reserved.</p>
           <div className="flex items-center gap-3">
             {SOCIALS.map(({ icon: Icon, href, label }) => (
               <a

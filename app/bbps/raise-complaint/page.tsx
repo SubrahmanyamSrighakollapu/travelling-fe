@@ -55,19 +55,7 @@ export default function BBPSRaiseComplaintPage() {
   return (
     <BBPSLayout pageTitle="Complaint Registration">
       <div className="space-y-6">
-        <div className="bg-sky-300/80 rounded-2xl p-6 shadow-sm relative min-h-[460px]">
-          {/* Fixed 35px Bharat Connect Horizontal Logo Top-Right */}
-          <div className="absolute top-4 right-4 bg-white px-2 py-1 rounded shadow-2xs">
-            <Image
-              src="/assets/Bharat Connect Primary Logo_PNG.png"
-              alt="Bharat Connect"
-              width={140}
-              height={35}
-              className="h-[35px] w-auto object-contain"
-              priority
-            />
-          </div>
-
+        <div className="bg-sky-300/80 rounded-2xl p-6 shadow-sm min-h-[460px]">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
             {/* Left Sidebar Menu */}
             <div className="md:col-span-1 bg-sky-200/60 rounded-xl p-3 space-y-2 text-xs font-semibold text-slate-800">
@@ -98,9 +86,21 @@ export default function BBPSRaiseComplaintPage() {
               {!submittedComplaint ? (
                 /* Complaint Form */
                 <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs max-w-xl">
-                  <h2 className="text-sm font-bold text-red-500 pb-2 border-b border-slate-100">
-                    Complaint Registration Screen
-                  </h2>
+                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <h2 className="text-sm font-bold text-red-500">
+                      Complaint Registration Screen
+                    </h2>
+                    <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+                      <Image
+                        src="/assets/Bharat Connect Primary Logo_PNG.png"
+                        alt="Bharat Connect"
+                        width={140}
+                        height={35}
+                        className="h-[32px] w-auto object-contain"
+                        priority
+                      />
+                    </div>
+                  </div>
 
                   <div className="space-y-1">
                     <label className="font-bold text-slate-800 block">Type of Complaint</label>

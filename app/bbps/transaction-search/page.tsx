@@ -38,19 +38,7 @@ export default function BBPSTransactionSearchPage() {
     <BBPSLayout pageTitle="Query Transaction">
       <div className="space-y-6">
         {/* Main Query Transaction Form Canvas (Matching PDF Page 5 & Screenshot 1) */}
-        <div className="bg-sky-300/80 rounded-2xl p-6 shadow-sm relative min-h-[460px]">
-          {/* Fixed 35px Bharat Connect Horizontal Logo Top-Right */}
-          <div className="absolute top-4 right-4 bg-white px-2 py-1 rounded shadow-2xs">
-            <Image
-              src="/assets/Bharat Connect Primary Logo_PNG.png"
-              alt="Bharat Connect"
-              width={140}
-              height={35}
-              className="h-[35px] w-auto object-contain"
-              priority
-            />
-          </div>
-
+        <div className="bg-sky-300/80 rounded-2xl p-6 shadow-sm min-h-[460px]">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
             {/* Left Sidebar Menu (Matching Screenshot 1) */}
             <div className="md:col-span-1 bg-sky-200/60 rounded-xl p-3 space-y-2 text-xs font-semibold text-slate-800">
@@ -78,10 +66,22 @@ export default function BBPSTransactionSearchPage() {
 
             {/* Form Content Area (Matching PDF Page 5 & Screenshot 1) */}
             <div className="md:col-span-3 bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm space-y-5">
-              {/* Title: Query Transaction in RED text (Screenshot 1) */}
-              <h2 className="text-sm font-bold text-red-500 tracking-tight">
-                Query Transaction
-              </h2>
+              {/* Header Row: Title & Top-Right Bharat Connect Logo */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h2 className="text-sm font-bold text-red-500 tracking-tight">
+                  Query Transaction
+                </h2>
+                <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+                  <Image
+                    src="/assets/Bharat Connect Primary Logo_PNG.png"
+                    alt="Bharat Connect"
+                    width={140}
+                    height={35}
+                    className="h-[32px] w-auto object-contain"
+                    priority
+                  />
+                </div>
+              </div>
 
               <form onSubmit={handleSubmit} className="space-y-4 max-w-md text-xs">
                 {/* Enter MobileNumber */}

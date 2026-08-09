@@ -47,17 +47,14 @@ export function BBPSHeader({ pageTitle }: BBPSHeaderProps) {
         {/* Left: Agent Brand Identity */}
         <div className="flex items-center gap-3">
           <Link href="/bbps/dashboard" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center font-extrabold text-sm shadow-xs">
-              BC
-            </div>
-            <div>
-              <span className="text-sm font-extrabold text-slate-900 tracking-tight block">
-                BHARAT CONNECT
-              </span>
-              <span className="text-[10px] text-slate-500 font-semibold tracking-wider block -mt-1 uppercase">
-                Retailer Operations Portal
-              </span>
-            </div>
+            <Image
+              src="/assets/web-logo.jpg"
+              alt="Logo"
+              width={160}
+              height={40}
+              className="h-10 w-auto object-contain rounded-lg"
+              priority
+            />
           </Link>
         </div>
 
