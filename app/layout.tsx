@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const themeInitScript = `
@@ -35,22 +36,22 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Wanderlust — Premium Travel Booking Platform",
-    template: "%s | Wanderlust",
+    default: "Bharat Connect — Retailer Operations Portal",
+    template: "%s | Bharat Connect",
   },
-  description: "Discover, plan, and book extraordinary journeys. Premium travel experiences with the best prices guaranteed.",
-  keywords: ["travel", "flights", "hotels", "packages", "tours", "visa", "holiday"],
+  description: "Bharat Connect BBPS Retailer Operations Node and Travel Platform.",
+  keywords: ["bbps", "bharat connect", "bill pay", "retailer portal", "travel"],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://wanderlust.travel",
-    siteName: "Wanderlust",
-    title: "Wanderlust — Premium Travel Booking Platform",
-    description: "Discover, plan, and book extraordinary journeys.",
+    url: "https://bharatconnect.in",
+    siteName: "Bharat Connect",
+    title: "Bharat Connect — Retailer Operations Portal",
+    description: "Bharat Connect BBPS Retailer Operations Portal.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wanderlust — Premium Travel Booking Platform",
+    title: "Bharat Connect — Retailer Operations Portal",
     description: "Discover, plan, and book extraordinary journeys.",
   },
 };
@@ -59,7 +60,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
       </head>
       <body className="min-h-screen flex flex-col antialiased">
         {children}

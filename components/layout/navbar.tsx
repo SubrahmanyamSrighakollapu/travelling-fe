@@ -208,7 +208,7 @@ export function Navbar() {
             </Link>
 
             <div className="hidden sm:flex items-center gap-2 ml-1">
-              <Link href="/auth">
+              <Link href="/bbps/login">
                 <Button variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10">Sign In</Button>
               </Link>
               <Link href="/auth?tab=register">
@@ -268,7 +268,7 @@ export function Navbar() {
                 </Link>
               </div>
               <div className="pt-3 border-t border-white/10 flex gap-2">
-                <Link href="/auth" className="flex-1">
+                <Link href="/bbps/login" className="flex-1">
                   <Button variant="secondary" size="md" className="w-full">Sign In</Button>
                 </Link>
                 <Link href="/auth?tab=register" className="flex-1">

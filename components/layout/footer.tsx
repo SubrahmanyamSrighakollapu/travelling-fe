@@ -14,6 +14,7 @@ const FOOTER_LINKS = {
     { label: "Paris, France", href: "/destinations/paris" },
   ],
   "Services": [
+    { label: "BBPS Agent Portal", href: "/bbps/login" },
     { label: "Flight Booking", href: "/flights" },
     { label: "Hotel Booking", href: "/hotels" },
     { label: "Holiday Packages", href: "/packages" },
