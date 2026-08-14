@@ -8,14 +8,14 @@ import { BBPSLayout } from "@/components/bbps/bbps-layout";
 import { useBBPSStore, Complaint } from "@/lib/bbps-store";
 
 const PDF_EXACT_DISPOSITIONS = [
-  "i.) Transaction Successful, Amount Debited but services not received",
-  "ii) Transaction Successful, Amount Debited but Service Disconnected or Service Stopped",
-  "iii) Transaction Successful, Amount Debited but Late Payment Surcharge Charges add in next bill",
-  "iv) Erroneously paid in wrong account",
-  "v) Duplicate Payment",
-  "vi) Erroneously paid the wrong amount",
-  "vii) Payment information not received from Biller or Delay in receiving payment information from the Biller.",
-  "viii) Bill Paid but Amount not adjusted or still showing due amount.",
+  "Transaction Successful, Amount Debited but services not received",
+  "Transaction Successful, Amount Debited but Service Disconnected or Service Stopped",
+  "Transaction Successful, Amount Debited but Late Payment Surcharge Charges add in next bill",
+  "Erroneously paid in wrong account",
+  "Duplicate Payment",
+  "Erroneously paid the wrong amount",
+  "Payment information not received from Biller or Delay in receiving payment information from the Biller.",
+  "Bill Paid but Amount not adjusted or still showing due amount.",
 ];
 
 export default function BBPSRaiseComplaintPage() {
@@ -83,7 +83,7 @@ export default function BBPSRaiseComplaintPage() {
             <div className="md:col-span-3">
               {!submittedComplaint ? (
                 /* Complaint Form */
-                <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs max-w-xl">
+                <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs w-full">
                   <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                     <h2 className="text-sm font-bold text-red-500">
                       Complaint Registration Screen
@@ -161,7 +161,7 @@ export default function BBPSRaiseComplaintPage() {
                 </form>
               ) : (
                 /* Registration Success Response Card (Screenshot 2 Match) */
-                <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm max-w-md mx-auto space-y-6 text-xs text-slate-900">
+                <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm w-full space-y-6 text-xs text-slate-900">
                   {/* Header Title (Screenshot 2) */}
                   <div className="text-center">
                     <h2 className="text-base font-bold text-slate-900">

@@ -56,7 +56,7 @@ function ComplaintStatusContent() {
             {/* Right Content Panel (Matching Screenshot 3) */}
             <div className="md:col-span-3 space-y-6">
               {/* Form Box: Check Complaint Status (Screenshot 3) */}
-              <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm max-w-xl space-y-4">
+              <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm w-full space-y-4">
                 <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                   <h2 className="text-sm font-bold text-red-500">
                     Check Complaint Status
@@ -100,7 +100,7 @@ function ComplaintStatusContent() {
 
               {/* Status Result Display Card (Screenshot 3 Match) */}
               {showStatusResult && (
-                <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm max-w-xl space-y-6 text-xs text-slate-900">
+                <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm w-full space-y-6 text-xs text-slate-900">
                   {/* Status Title (Screenshot 3) */}
                   <div className="text-center">
                     <h3 className="text-base font-bold text-slate-900">
