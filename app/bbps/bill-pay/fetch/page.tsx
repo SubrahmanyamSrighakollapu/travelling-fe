@@ -14,7 +14,6 @@ const ALL_BBPS_CATEGORIES = [
   "Cable TV",
   "Clubs and Associations",
   "Credit Card",
-  "Donation",
   "DTH",
   "eChallan",
   "Education Fees",
@@ -35,7 +34,6 @@ const ALL_BBPS_CATEGORIES = [
   "National Pension System",
   "NCMC Recharge",
   "Prepaid Meter",
-  "Recurring Deposit",
   "Rental",
   "Subscription",
   "Water",
@@ -160,7 +158,7 @@ export default function BBPSBillFetchPage() {
           <h1 className="text-xl font-bold text-slate-900 uppercase tracking-tight">
             BILL
           </h1>
-          <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+          <div className="px-3 py-1">
             <Image
               src="/assets/Bharat Connect Primary Logo_PNG.png"
               alt="Bharat Connect"

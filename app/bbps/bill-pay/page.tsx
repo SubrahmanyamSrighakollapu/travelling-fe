@@ -10,17 +10,34 @@ import { useBBPSStore } from "@/lib/bbps-store";
 import { playPaymentSuccessSound } from "@/lib/sound-utils";
 
 const CATEGORIES_LIST = [
-  "BroadBand PostPaid",
+  "Agent Collection",
+  "Broadband Postpaid",
   "Cable TV",
   "Clubs and Associations",
   "Credit Card",
-  "Donation",
   "DTH",
+  "eChallan",
   "Education Fees",
   "Electricity",
-  "E-Chellan",
-  "FASTag",
+  "EV Recharge",
+  "Fastag",
+  "Fleet Card Recharge",
   "Gas",
+  "Housing Society",
+  "Insurance",
+  "Landline Postpaid",
+  "Loan Repayment",
+  "LPG Gas",
+  "Mobile Postpaid",
+  "Mobile Prepaid",
+  "Municipal Services",
+  "Municipal Taxes",
+  "National Pension System",
+  "NCMC Recharge",
+  "Prepaid Meter",
+  "Rental",
+  "Subscription",
+  "Water",
 ];
 
 export default function BBPSBillPayPage() {
@@ -79,7 +96,7 @@ export default function BBPSBillPayPage() {
                 | SETTLEMENT WORKSPACE
               </span>
             </div>
-            <div className="bg-white px-3 py-1 rounded-lg border border-slate-200/80 shadow-2xs flex items-center justify-center">
+            <div className="px-3 py-1 flex items-center justify-center">
               <Image
                 src="/assets/Bharat Connect Primary Logo_PNG.png"
                 alt="Bharat Connect"

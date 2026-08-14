@@ -61,7 +61,7 @@ function ComplaintStatusContent() {
                   <h2 className="text-sm font-bold text-red-500">
                     Check Complaint Status
                   </h2>
-                  <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+                  <div className="px-3 py-1">
                     <Image
                       src="/assets/Bharat Connect Primary Logo_PNG.png"
                       alt="Bharat Connect"
