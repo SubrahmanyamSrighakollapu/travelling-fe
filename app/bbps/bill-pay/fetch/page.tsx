@@ -1,94 +1,140 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
-import { 
-  Search, ArrowLeft, ArrowRight, Smartphone, User, Mail, 
-  Hash, Shield, CheckCircle2, Zap, HelpCircle 
-} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Search, Zap } from "lucide-react";
 import { BBPSLayout } from "@/components/bbps/bbps-layout";
 import { useBBPSStore } from "@/lib/bbps-store";
+
+const ALL_BBPS_CATEGORIES = [
+  "Agent Collection",
+  "Broadband Postpaid",
+  "Cable TV",
+  "Clubs and Associations",
+  "Credit Card",
+  "Donation",
+  "DTH",
+  "eChallan",
+  "Education Fees",
+  "Electricity",
+  "EV Recharge",
+  "Fastag",
+  "Fleet Card Recharge",
+  "Gas",
+  "Housing Society",
+  "Insurance",
+  "Landline Postpaid",
+  "Loan Repayment",
+  "LPG Gas",
+  "Mobile Postpaid",
+  "Mobile Prepaid",
+  "Municipal Services",
+  "Municipal Taxes",
+  "National Pension System",
+  "NCMC Recharge",
+  "Prepaid Meter",
+  "Recurring Deposit",
+  "Rental",
+  "Subscription",
+  "Water",
+];
+
+const BILLERS_MAP: Record<string, { id: string; name: string }[]> = {
+  Electricity: [
+    { id: "OTME00005XXZ43", name: "OTME00005XXZ43 - Fetch and Pay" },
+    { id: "OTNS00005XXZ43", name: "OTNS00005XXZ43 - Quick Pay" },
+    { id: "APCPDCL0001", name: "Andhra Pradesh Central Power Distribution Corporation" },
+    { id: "TATA00001", name: "Tata Power Mumbai" },
+    { id: "BSES00001", name: "BSES Rajdhani Power Limited" },
+  ],
+  "Mobile Postpaid": [
+    { id: "OTNS00005XXZ43", name: "OTNS00005XXZ43 - Quick Pay" },
+    { id: "OTME00005XXZ43", name: "OTME00005XXZ43 - Fetch and Pay" },
+    { id: "JIO00001", name: "Jio Postpaid Mobile" },
+    { id: "VI00001", name: "Vodafone Idea (VI) Postpaid" },
+  ],
+  Gas: [
+    { id: "OTME00005XXZ43", name: "OTME00005XXZ43 - Fetch and Pay" },
+    { id: "OTNS00005XXZ43", name: "OTNS00005XXZ43 - Quick Pay" },
+  ],
+};
 
 export default function BBPSBillFetchPage() {
   const router = useRouter();
   const { currentFetchParams, setFetchParams, setBillDetails } = useBBPSStore();
 
+  const [selectedCategory, setSelectedCategory] = useState(
+    currentFetchParams.category || ""
+  );
+  const [selectedBiller, setSelectedBiller] = useState(
+    currentFetchParams.billerName || ""
+  );
+  const [billerId, setBillerId] = useState(
+    currentFetchParams.billerId || ""
+  );
   const [mobileNumber, setMobileNumber] = useState(
     currentFetchParams.mobileNumber || "9898990084"
   );
-  const [customerNumber, setCustomerNumber] = useState(
-    currentFetchParams.customerNumber || "9898990084"
+  const [connectionNumber, setConnectionNumber] = useState(
+    currentFetchParams.caNumber || "102938475"
   );
-  const [caNumber, setCaNumber] = useState(currentFetchParams.caNumber || "102938475");
-  const [customerName, setCustomerName] = useState(
-    currentFetchParams.customerName || "Rajesh Sharma"
-  );
-  const [email, setEmail] = useState(
-    currentFetchParams.email || "rajesh.sharma@example.com"
-  );
+  const [isFetching, setIsFetching] = useState(false);
 
-  // Dynamic parameters state: e.g. a=10, ab=20, etc.
-  const [paramKey, setParamKey] = useState("a");
-  const [paramVal, setParamVal] = useState("10");
-  const [isLoading, setIsLoading] = useState(false);
-  const [fetchError, setFetchError] = useState("");
-
-  const billerId = currentFetchParams.billerId || "OTME00005XXZ43";
-  const billerName = currentFetchParams.billerName || "Adani Electricity Mumbai Ltd";
-  const category = currentFetchParams.category || "Electricity";
-
-  // Quick Preset Handlers
-  const handleApplyPreset1 = () => {
-    setMobileNumber("9898990084");
-    setCustomerNumber("9898990084");
-    setCustomerName("Rajesh Sharma");
-    setFetchError("");
+  const handleCategoryChange = (catName: string) => {
+    setSelectedCategory(catName);
+    setSelectedBiller("");
+    setBillerId("");
   };
 
-  const handleApplyPreset2 = () => {
-    setMobileNumber("9898990083");
-    setCustomerNumber("9898990083");
-    setCustomerName("Priya Sundaram");
-    setFetchError("");
-  };
+  const handleBillerChange = (billerName: string) => {
+    setSelectedBiller(billerName);
+    const found = (BILLERS_MAP[selectedCategory] || []).find((b) => b.name === billerName);
+    const targetId = found ? found.id : "OTME00005XXZ43";
+    setBillerId(targetId);
 
-  const handleApplyAddParam = (key: string, val: string) => {
-    setParamKey(key);
-    setParamVal(val);
+    // Auto preset UAT mobile number
+    if (targetId === "OTNS00005XXZ43") {
+      setMobileNumber("9898990083");
+    } else {
+      setMobileNumber("9898990084");
+    }
   };
 
   const handleFetchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setFetchError("");
+    setIsFetching(true);
 
     setTimeout(() => {
-      setIsLoading(false);
+      setIsFetching(false);
 
-      // Populate bill details into Zustand store
+      const targetId = billerId || "OTME00005XXZ43";
+      const mob = mobileNumber || (targetId === "OTNS00005XXZ43" ? "9898990083" : "9898990084");
+
       setFetchParams({
-        mobileNumber,
-        customerNumber,
-        caNumber,
-        customerName,
-        email,
-        additionalParams: { [paramKey]: paramVal },
+        category: selectedCategory || "Electricity",
+        billerId: targetId,
+        billerName: selectedBiller || `${selectedCategory || "Electricity"} Biller`,
+        mobileNumber: mob,
+        customerNumber: mob,
+        caNumber: connectionNumber || "102938475",
+        customerName: "Rajesh Sharma",
       });
 
       setBillDetails({
-        billerId,
-        billerName,
-        category,
-        customerName,
-        customerNumber,
-        caNumber,
+        billerId: targetId,
+        billerName: selectedBiller || `${selectedCategory || "Electricity"} Biller`,
+        category: selectedCategory || "Electricity",
+        customerName: "Rajesh Sharma",
+        customerNumber: mob,
+        caNumber: connectionNumber || "102938475",
         billDate: "2026-07-28",
         billPeriod: "JUL-2026",
         billNumber: `EL-2026-${Math.floor(10000 + Math.random() * 90000)}`,
         dueDate: "2026-08-20",
-        baseAmount: mobileNumber === "9898990083" ? 899 : 1450,
-        latePaymentFee: 50,
+        baseAmount: mob === "9898990083" ? 899 : 1450,
+        latePaymentFee: 40,
         additionalCharges: 25,
         fixedCharges: 15,
         convenienceFee: 10,
@@ -98,230 +144,158 @@ export default function BBPSBillFetchPage() {
           additionalCharges: true,
           fixedCharges: true,
         },
-        paymentMode: "Agent Wallet",
+        paymentMode: "Cash",
       });
 
-      router.push("/bbps/bill-pay/details");
-    }, 700);
+      // Redirect to Settlement Workspace Page (/bbps/bill-pay) with embedded Bill Details fields
+      router.push("/bbps/bill-pay");
+    }, 500);
   };
 
   return (
-    <BBPSLayout pageTitle="Fetch Customer Bill Parameters">
-      <div className="max-w-3xl mx-auto space-y-6">
-        {/* Top Back Navigation & Biller Header */}
-        <div className="flex items-center justify-between">
-          <Link
-            href="/bbps/bill-pay"
-            className="text-xs text-slate-500 hover:text-slate-900 font-semibold flex items-center gap-1.5"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Categories
-          </Link>
-          <span className="text-xs font-mono bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md border border-slate-200">
-            Category: {category}
-          </span>
-        </div>
-
-        {/* Selected Biller Card */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
-              Selected Biller
-            </span>
-            <h2 className="text-lg font-bold text-slate-900">{billerName}</h2>
-            <p className="text-xs text-slate-500 font-mono mt-0.5">
-              Biller ID: <span className="font-bold text-slate-800">{billerId}</span>
-            </p>
-          </div>
-          <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-lg">
-            BBPS
+    <BBPSLayout pageTitle="Pay Bills — Category & Biller Selection">
+      <div className="max-w-5xl mx-auto space-y-6">
+        {/* Top Header Row with Bharat Connect Logo on Right (Screenshot Match) */}
+        <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+          <h1 className="text-xl font-bold text-slate-900 uppercase tracking-tight">
+            BILL
+          </h1>
+          <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+            <Image
+              src="/assets/Bharat Connect Primary Logo_PNG.png"
+              alt="Bharat Connect"
+              width={140}
+              height={35}
+              className="h-[35px] w-auto object-contain"
+              priority
+            />
           </div>
         </div>
 
-        {/* UAT Sample Inputs Preset Toolbar */}
-        <div className="bg-amber-50/80 border border-amber-200/80 rounded-xl p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-amber-600" /> Mandatory UAT Quick Presets
-            </h4>
-            <span className="text-[10px] text-amber-800 font-medium">Click to load test vectors</span>
+        {/* 2-Column Layout (Matching Screenshot 100%) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start pt-4">
+          {/* Left Column: pay-bill-image illustration */}
+          <div className="flex items-center justify-center p-4 bg-slate-50/50 rounded-2xl border border-slate-100">
+            <Image
+              src="/assets/pay-bill-image.png"
+              alt="Pay Bill Illustration"
+              width={420}
+              height={420}
+              className="w-full max-w-[380px] h-auto object-contain"
+              priority
+            />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={handleApplyPreset1}
-              className="text-left p-2.5 bg-white border border-amber-200 rounded-lg hover:border-amber-500 transition-colors text-xs"
-            >
-              <div className="font-bold text-slate-800">9898990084 (Fetch & Pay)</div>
-              <div className="text-[11px] text-slate-500">Adani Electricity Standard Fetch</div>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleApplyPreset2}
-              className="text-left p-2.5 bg-white border border-amber-200 rounded-lg hover:border-amber-500 transition-colors text-xs"
-            >
-              <div className="font-bold text-slate-800">9898990083 (Quick Pay)</div>
-              <div className="text-[11px] text-slate-500">Airtel Postpaid Quick Pay</div>
-            </button>
-          </div>
-
-          {/* Additional Dynamic Parameters toolbar: a=10, a b=20, etc */}
-          <div className="pt-2 border-t border-amber-200/60">
-            <div className="text-[11px] font-semibold text-amber-900 mb-1.5">
-              Additional Parameters (UAT Required):
+          {/* Right Column: Bharat Connect Billers Card */}
+          <div className="bg-white border border-slate-300 rounded-xl shadow-xs overflow-hidden">
+            <div className="bg-slate-100 px-4 py-3 border-b border-slate-200">
+              <h3 className="text-sm font-bold text-slate-800">
+                Bharat Connect Billers
+              </h3>
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              {[
-                { k: "a", v: "10" },
-                { k: "a b", v: "20" },
-                { k: "a b c", v: "30" },
-                { k: "a b c d", v: "40" },
-                { k: "a b c d e", v: "50" },
-              ].map((item, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => handleApplyAddParam(item.k, item.v)}
-                  className={`px-2.5 py-1 text-xs rounded-md border font-mono transition-colors ${
-                    paramKey === item.k
-                      ? "bg-amber-600 text-white font-bold border-amber-700"
-                      : "bg-white text-slate-700 border-amber-300 hover:bg-amber-100"
-                  }`}
+
+            <form onSubmit={handleFetchSubmit} className="p-6 space-y-5 text-xs">
+              {/* Step 1: Biller Category Dropdown (30 BBPS Categories) */}
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-800 block">
+                  Biller Category<span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => handleCategoryChange(e.target.value)}
+                  className="w-full h-10 px-3 border border-slate-300 rounded-md bg-white text-slate-900 font-semibold focus:border-blue-600 focus:outline-none"
+                  required
                 >
-                  {item.k} = {item.v}
-                </button>
-              ))}
-            </div>
+                  <option value="" disabled>
+                    -- Select Biller Category --
+                  </option>
+                  {ALL_BBPS_CATEGORIES.map((cat, idx) => (
+                    <option key={idx} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Step 2: Revealed ONLY after Biller Category is selected */}
+              {selectedCategory !== "" && (
+                <div className="space-y-1 animate-in fade-in duration-200">
+                  <label className="text-xs font-bold text-slate-800 block">
+                    Biller Name<span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={selectedBiller}
+                    onChange={(e) => handleBillerChange(e.target.value)}
+                    className="w-full h-10 px-3 border border-slate-300 rounded-md bg-white text-slate-900 font-semibold focus:border-blue-600 focus:outline-none truncate"
+                    required
+                  >
+                    <option value="" disabled>
+                      -- Select Biller Name --
+                    </option>
+                    {(
+                      BILLERS_MAP[selectedCategory] || [
+                        { id: "OTME00005XXZ43", name: "OTME00005XXZ43 - Fetch and Pay" },
+                        { id: "OTNS00005XXZ43", name: "OTNS00005XXZ43 - Quick Pay" },
+                      ]
+                    ).map((b, idx) => (
+                      <option key={idx} value={b.name}>
+                        {b.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* Step 3: Revealed ONLY after Biller Name is selected */}
+              {selectedBiller !== "" && (
+                <div className="space-y-4 pt-1 animate-in fade-in duration-200">
+                  {/* Customer Mobile Number */}
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-slate-800 block">
+                      Customer Mobile Number<span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value)}
+                      placeholder="Enter customer 10-digit mobile number"
+                      className="w-full h-10 px-3 border border-slate-300 rounded-md bg-white text-slate-900 font-semibold focus:border-blue-600 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Service Connection / Account Number */}
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-slate-800 block">
+                      {selectedCategory === "Electricity"
+                        ? "13 Digit Service Connection Number*"
+                        : "Customer Account / CA Number*"}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={connectionNumber}
+                      onChange={(e) => setConnectionNumber(e.target.value)}
+                      placeholder="Enter account connection number"
+                      className="w-full h-10 px-3 border border-slate-300 rounded-md bg-white text-slate-900 font-semibold focus:border-blue-600 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Step 4: Centered Teal Fetch Bill Button (Screenshot Exact Match) */}
+                  <div className="text-center pt-3">
+                    <button
+                      type="submit"
+                      disabled={isFetching}
+                      className="px-8 py-2.5 bg-teal-800 hover:bg-teal-900 text-white font-bold text-xs rounded-md shadow-xs transition-colors cursor-pointer disabled:opacity-75"
+                    >
+                      {isFetching ? "Fetching Bill..." : "Fetch Bill"}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </form>
           </div>
         </div>
-
-        {/* Bill Fetch Form */}
-        <form onSubmit={handleFetchSubmit} className="bg-white p-6 rounded-xl border border-slate-200 shadow-2xs space-y-5">
-          <h3 className="text-sm font-bold text-slate-900 pb-3 border-b border-slate-100">
-            Enter Biller Dynamic Input Parameters
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Mobile Number */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
-                Mobile Number <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <Smartphone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  required
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value)}
-                  placeholder="9898990084"
-                  className="w-full h-10 pl-9 pr-3 text-xs bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600"
-                />
-              </div>
-            </div>
-
-            {/* Customer Number */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
-                Customer Number / Account ID <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <Hash className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  required
-                  value={customerNumber}
-                  onChange={(e) => setCustomerNumber(e.target.value)}
-                  placeholder="9898990084"
-                  className="w-full h-10 pl-9 pr-3 text-xs bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600"
-                />
-              </div>
-            </div>
-
-            {/* CA Number */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
-                CA Number / Consumer No.
-              </label>
-              <input
-                type="text"
-                value={caNumber}
-                onChange={(e) => setCaNumber(e.target.value)}
-                placeholder="102938475"
-                className="w-full h-10 px-3 text-xs bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600"
-              />
-            </div>
-
-            {/* Customer Name */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
-                Customer Name
-              </label>
-              <div className="relative">
-                <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  placeholder="Rajesh Sharma"
-                  className="w-full h-10 pl-9 pr-3 text-xs bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600"
-                />
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
-                Customer Email ID
-              </label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="rajesh.sharma@example.com"
-                  className="w-full h-10 pl-9 pr-3 text-xs bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600"
-                />
-              </div>
-            </div>
-
-            {/* Additional Parameter Key-Value */}
-            <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-700">
-                Additional Biller Parameter ({paramKey})
-              </label>
-              <input
-                type="text"
-                value={paramVal}
-                onChange={(e) => setParamVal(e.target.value)}
-                placeholder="10"
-                className="w-full h-10 px-3 text-xs bg-white border border-slate-200 rounded-lg font-mono focus:ring-2 focus:ring-blue-600/30 focus:border-blue-600"
-              />
-            </div>
-          </div>
-
-          {/* Prominent Fetch Bill Button */}
-          <div className="pt-3 border-t border-slate-100">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75"
-            >
-              {isLoading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Fetching Bill Details from BBPS Server...
-                </>
-              ) : (
-                <>
-                  <Search className="w-4 h-4" /> Fetch Bill Details
-                </>
-              )}
-            </button>
-          </div>
-        </form>
       </div>
     </BBPSLayout>
   );

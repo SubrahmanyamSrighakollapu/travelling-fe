@@ -23,7 +23,7 @@ export default function BBPSDashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Card 1: Pay Bill */}
             <Link
-              href="/bbps/bill-pay"
+              href="/bbps/bill-pay/fetch"
               className="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
             >
               <div className="flex items-center justify-between">

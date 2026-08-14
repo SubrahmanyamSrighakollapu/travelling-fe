@@ -32,7 +32,7 @@ export function BBPSHeader({ pageTitle }: BBPSHeaderProps) {
     { label: "Home", href: "/bbps/dashboard" },
     { 
       label: "Pay Bills", 
-      href: "/bbps/bill-pay", 
+      href: "/bbps/bill-pay/fetch", 
       isPayBills: true 
     },
     { label: "Services", href: "#services", isServices: true },

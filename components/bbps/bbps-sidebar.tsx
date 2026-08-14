@@ -31,7 +31,7 @@ export function BBPSSidebar({ onCloseMobile }: BBPSSidebarProps) {
 
   const NAV_ITEMS = [
     { label: "Dashboard", href: "/bbps/dashboard", icon: LayoutDashboard },
-    { label: "Bill Pay", href: "/bbps/bill-pay", icon: CreditCard },
+    { label: "Bill Pay", href: "/bbps/bill-pay/fetch", icon: CreditCard },
     { label: "Transaction Search", href: "/bbps/transaction-search", icon: Search },
     { label: "Raise Complaint", href: "/bbps/raise-complaint", icon: AlertCircle },
     { label: "Complaint Status", href: "/bbps/complaint-status", icon: Clock },

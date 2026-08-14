@@ -11,10 +11,6 @@ import { playPaymentSuccessSound } from "@/lib/sound-utils";
 export default function BBPSPaymentSuccessPage() {
   const { lastTransaction } = useBBPSStore();
 
-  useEffect(() => {
-    playPaymentSuccessSound();
-  }, []);
-
   const txn = lastTransaction || {
     id: "CC015170BAAF00005029",
     agentId: "AG-883920",
