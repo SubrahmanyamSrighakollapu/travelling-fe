@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { 
-  CreditCard, Search, AlertCircle, Clock, CheckCircle, 
-  XCircle, ChevronRight, FileText 
+import {
+  CreditCard, Search, AlertCircle, Clock, CheckCircle,
+  XCircle, ChevronRight, FileText
 } from "lucide-react";
 import { BBPSLayout } from "@/components/bbps/bbps-layout";
 import { useBBPSStore } from "@/lib/bbps-store";
@@ -65,7 +65,7 @@ export default function BBPSDashboardPage() {
                 <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                   Search Transaction
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">By Txn ID or Mobile</p>
+                <p className="text-xs text-slate-500 mt-0.5">By B-Connect Txn ID or Mobile</p>
               </div>
             </Link>
 
@@ -134,7 +134,7 @@ export default function BBPSDashboardPage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
                   <tr>
-                    <th className="px-4 py-3">BBPS Txn ID</th>
+                    <th className="px-4 py-3">B-Connect Txn ID</th>
                     <th className="px-4 py-3">Biller Name</th>
                     <th className="px-4 py-3">Customer</th>
                     <th className="px-4 py-3">Amount</th>

@@ -121,9 +121,9 @@ export default function BBPSTransactionSearchPage() {
                   </div>
                 </div>
 
-                {/* B-Connect Transition Id */}
+                {/* B-Connect Txn ID */}
                 <div className="space-y-1">
-                  <label className="font-semibold text-slate-800 block">B-Connect Transition Id</label>
+                  <label className="font-semibold text-slate-800 block">B-Connect Txn ID</label>
                   <input
                     type="text"
                     value={txnId}

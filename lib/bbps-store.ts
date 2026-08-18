@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface Transaction {
-  id: string; // BBPS Txn ID starting with CC01
+  id: string; // B-Connect Txn ID starting with CC01
   agentId: string;
   billerId: string;
   billerName: string;
@@ -95,7 +95,7 @@ interface BBPSState {
     ifscCode: string;
     bbpsLicenseNo: string;
   };
-  
+
   // Active payment workflow state
   currentFetchParams: Partial<BillFetchParams>;
   currentBillDetails: BillDetails | null;

@@ -115,7 +115,7 @@ export default function BBPSRaiseComplaintPage() {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-slate-800 block">B-Connect Transaction ID</label>
+                    <label className="font-bold text-slate-800 block">B-Connect Txn ID</label>
                     <input
                       type="text"
                       required
@@ -192,7 +192,7 @@ export default function BBPSRaiseComplaintPage() {
                     </div>
 
                     <div className="flex justify-between border-b border-slate-100 pb-2">
-                      <span className="font-bold text-slate-800">Transaction ID:</span>
+                      <span className="font-bold text-slate-800">B-Connect Txn ID:</span>
                       <span className="font-mono font-bold text-slate-900">{transactionId}</span>
                     </div>
 

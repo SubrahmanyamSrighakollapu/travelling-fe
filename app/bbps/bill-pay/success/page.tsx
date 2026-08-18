@@ -59,7 +59,7 @@ export default function BBPSPaymentSuccessPage() {
           {/* Itemized Key-Value Data List (Screenshot 4) */}
           <div className="space-y-2.5 text-xs text-slate-800 border-t border-b border-slate-100 py-4 font-sans">
             <div className="flex justify-between items-center">
-              <span className="font-bold text-slate-700">B-connect Transaction Ref ID</span>
+              <span className="font-bold text-slate-700">B-Connect Txn ID</span>
               <span className="font-mono font-extrabold text-slate-900 select-all">
                 {txn.id}
               </span>
