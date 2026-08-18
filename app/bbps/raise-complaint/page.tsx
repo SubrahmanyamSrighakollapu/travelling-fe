@@ -7,7 +7,6 @@ import { CheckCircle2, MessageSquare } from "lucide-react";
 import { BBPSLayout } from "@/components/bbps/bbps-layout";
 import { useBBPSStore, Complaint } from "@/lib/bbps-store";
 
-// Exact PDF Dispositions list from Page 5 Item 8
 const PDF_EXACT_DISPOSITIONS = [
   "Transaction Successful, Amount Debited but services not received",
   "Transaction Successful, Amount Debited but Service Disconnected or Service Stopped",
@@ -15,17 +14,16 @@ const PDF_EXACT_DISPOSITIONS = [
   "Erroneously paid in wrong account",
   "Duplicate Payment",
   "Erroneously paid the wrong amount",
-  "Payment information not received from Biller or Delay in receiving payment information from the Biller",
-  "Bill Paid but Amount not adjusted or still showing due amount",
+  "Payment information not received from Biller or Delay in receiving payment information from the Biller.",
+  "Bill Paid but Amount not adjusted or still showing due amount.",
 ];
 
 export default function BBPSRaiseComplaintPage() {
   const { addComplaint } = useBBPSStore();
 
-  const [complaintType, setComplaintType] = useState("Transaction");
+  const [complaintType, setComplaintType] = useState(PDF_EXACT_DISPOSITIONS[0]);
   const [transactionId, setTransactionId] = useState("CC015120BAAE00094037");
   const [customerName, setCustomerName] = useState("CC AVENUE");
-  const [disposition, setDisposition] = useState(PDF_EXACT_DISPOSITIONS[0]);
   const [description, setDescription] = useState("Amount debited from customer account but service pending.");
 
   const [submittedComplaint, setSubmittedComplaint] = useState<Complaint | null>(null);
@@ -41,7 +39,7 @@ export default function BBPSRaiseComplaintPage() {
       const newCmp = addComplaint({
         transactionId,
         complaintType,
-        disposition,
+        disposition: complaintType,
         description,
       });
 
@@ -85,12 +83,12 @@ export default function BBPSRaiseComplaintPage() {
             <div className="md:col-span-3">
               {!submittedComplaint ? (
                 /* Complaint Form */
-                <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs max-w-xl">
+                <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm space-y-4 text-xs w-full">
                   <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                     <h2 className="text-sm font-bold text-red-500">
                       Complaint Registration Screen
                     </h2>
-                    <div className="bg-white px-3 py-1 rounded-lg border border-slate-200 shadow-2xs">
+                    <div className="px-3 py-1">
                       <Image
                         src="/assets/Bharat Connect Primary Logo_PNG.png"
                         alt="Bharat Connect"
@@ -107,10 +105,13 @@ export default function BBPSRaiseComplaintPage() {
                     <select
                       value={complaintType}
                       onChange={(e) => setComplaintType(e.target.value)}
-                      className="w-full h-10 px-3 border border-slate-300 rounded-lg bg-white font-semibold"
+                      className="w-full h-10 px-3 border border-slate-300 rounded-lg bg-white font-medium"
                     >
-                      <option value="Transaction">Transaction (Default)</option>
-                      <option value="Service">Service</option>
+                      {PDF_EXACT_DISPOSITIONS.map((d, idx) => (
+                        <option key={idx} value={d}>
+                          {d}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -138,22 +139,6 @@ export default function BBPSRaiseComplaintPage() {
                     />
                   </div>
 
-                  {/* PDF Dispositions Dropdown */}
-                  <div className="space-y-1">
-                    <label className="font-bold text-slate-800 block">BBPS Disposition</label>
-                    <select
-                      value={disposition}
-                      onChange={(e) => setDisposition(e.target.value)}
-                      className="w-full h-10 px-3 border border-slate-300 rounded-lg bg-white font-medium"
-                    >
-                      {PDF_EXACT_DISPOSITIONS.map((d, idx) => (
-                        <option key={idx} value={d}>
-                          {d}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
                   <div className="space-y-1">
                     <label className="font-bold text-slate-800 block">Complaint Description</label>
                     <textarea
@@ -176,7 +161,7 @@ export default function BBPSRaiseComplaintPage() {
                 </form>
               ) : (
                 /* Registration Success Response Card (Screenshot 2 Match) */
-                <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm max-w-md mx-auto space-y-6 text-xs text-slate-900">
+                <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm w-full space-y-6 text-xs text-slate-900">
                   {/* Header Title (Screenshot 2) */}
                   <div className="text-center">
                     <h2 className="text-base font-bold text-slate-900">
