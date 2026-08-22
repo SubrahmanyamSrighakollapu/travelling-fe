@@ -44,7 +44,7 @@ export default function BBPSDashboardPage() {
                 <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
                   Pay Bill
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">30+ BBPS Categories</p>
+                <p className="text-xs text-slate-500 mt-0.5">30+ Categories</p>
               </div>
             </Link>
 
@@ -120,7 +120,7 @@ export default function BBPSDashboardPage() {
             <div className="p-4 border-b border-slate-100 flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">Recent Transactions</h3>
-                <p className="text-[11px] text-slate-500">Latest executed BBPS bill settlements</p>
+                <p className="text-[11px] text-slate-500">Latest executed bill settlements</p>
               </div>
               <Link
                 href="/bbps/transaction-search"
